@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 
 const IMG_1 = 'https://cdn.poehali.dev/projects/9df3bbc5-6dd9-4564-ab49-b7688afd02ac/files/5b79f9e1-ca67-411a-b2a6-c3957d9b7b25.jpg';
@@ -65,20 +66,31 @@ const Index = () => {
             </div>
             <span className="font-display font-extrabold text-xl tracking-tight">Лумен</span>
           </div>
-          {NAV.map((item) => (
-            <button
-              key={item.label}
-              onClick={() => setActive(item.label)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-left transition-all ${
-                active === item.label
-                  ? 'bg-secondary font-semibold text-foreground'
-                  : 'text-muted-foreground hover:bg-secondary/60'
-              }`}
-            >
-              <Icon name={item.icon} size={21} />
-              <span className="text-[15px]">{item.label}</span>
-            </button>
-          ))}
+          {NAV.map((item) =>
+            item.label === 'Профиль' ? (
+              <Link
+                key={item.label}
+                to="/profile"
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl text-left transition-all text-muted-foreground hover:bg-secondary/60"
+              >
+                <Icon name={item.icon} size={21} />
+                <span className="text-[15px]">{item.label}</span>
+              </Link>
+            ) : (
+              <button
+                key={item.label}
+                onClick={() => setActive(item.label)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-left transition-all ${
+                  active === item.label
+                    ? 'bg-secondary font-semibold text-foreground'
+                    : 'text-muted-foreground hover:bg-secondary/60'
+                }`}
+              >
+                <Icon name={item.icon} size={21} />
+                <span className="text-[15px]">{item.label}</span>
+              </button>
+            )
+          )}
           <button className="mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity">
             <Icon name="Plus" size={18} />
             Создать
@@ -156,13 +168,13 @@ const Index = () => {
             {POSTS.map((p, i) => (
               <article key={i} className="p-5 animate-fade-in" style={{ animationDelay: `${i * 80}ms` }}>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-primary to-rose-400 flex items-center justify-center text-white font-semibold">
+                  <Link to="/profile" className="h-11 w-11 rounded-full bg-gradient-to-tr from-primary to-rose-400 flex items-center justify-center text-white font-semibold shrink-0">
                     {p.author[0]}
-                  </div>
-                  <div className="flex-1">
+                  </Link>
+                  <Link to="/profile" className="flex-1">
                     <p className="font-semibold text-[15px] leading-tight">{p.author}</p>
                     <p className="text-xs text-muted-foreground">{p.handle} · {p.time}</p>
-                  </div>
+                  </Link>
                   <button className="px-4 py-1.5 rounded-full border border-border text-sm font-medium hover:bg-secondary transition-colors">
                     Подписаться
                   </button>
