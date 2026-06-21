@@ -77,10 +77,10 @@ const Index = () => {
               <span className="text-[15px]">{item.label}</span>
             </Link>
           ))}
-          <button className="mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity">
+          <Link to="/upload" className="mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-opacity">
             <Icon name="Plus" size={18} />
             Создать
-          </button>
+          </Link>
         </aside>
 
         {/* Main feed */}

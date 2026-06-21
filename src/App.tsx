@@ -12,6 +12,7 @@ import LivePage from "./pages/LivePage";
 import SearchPage from "./pages/SearchPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import MessagesPage from "./pages/MessagesPage";
+import UploadPage from "./pages/UploadPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/messages" element={<MessagesPage />} />
+          <Route path="/upload" element={<UploadPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
