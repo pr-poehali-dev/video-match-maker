@@ -25,6 +25,7 @@ const FOLLOWERS = ['Анна', 'Игорь', 'Маша', 'Костя', 'Лена
 const Profile = () => {
   const [tab, setTab] = useState('videos');
   const [following, setFollowing] = useState(false);
+  const [notif, setNotif] = useState(false);
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
@@ -56,7 +57,7 @@ const Profile = () => {
                 { n: '34.2K', l: 'подписчиков' },
                 { n: '512', l: 'подписки' },
               ].map((s) => (
-                <div key={s.l}>
+                <div key={s.l} className="cursor-pointer hover:opacity-70 transition-opacity">
                   <p className="font-display font-bold text-xl">{s.n}</p>
                   <p className="text-xs text-muted-foreground">{s.l}</p>
                 </div>
@@ -82,11 +83,17 @@ const Profile = () => {
             >
               {following ? 'Вы подписаны' : 'Подписаться'}
             </button>
-            <button className="flex-1 py-2.5 rounded-2xl font-semibold bg-secondary hover:bg-secondary/70 transition-colors">
+            <Link
+              to="/messages"
+              className="flex-1 py-2.5 rounded-2xl font-semibold bg-secondary hover:bg-secondary/70 transition-colors text-center"
+            >
               Сообщение
-            </button>
-            <button className="px-4 rounded-2xl bg-secondary hover:bg-secondary/70 transition-colors">
-              <Icon name="Bell" size={20} />
+            </Link>
+            <button
+              onClick={() => setNotif((v) => !v)}
+              className={`px-4 rounded-2xl transition-colors ${notif ? 'bg-primary text-primary-foreground' : 'bg-secondary hover:bg-secondary/70'}`}
+            >
+              <Icon name="Bell" size={20} className={notif ? 'fill-primary-foreground' : ''} />
             </button>
           </div>
 
@@ -127,34 +134,75 @@ const Profile = () => {
           ))}
         </div>
 
-        {/* Video grid */}
-        <section className="grid grid-cols-3 gap-1 p-1">
-          {VIDEOS.map((v, i) => (
-            <div
-              key={i}
-              className="relative aspect-[3/4] overflow-hidden group cursor-pointer animate-scale-in rounded-sm"
-              style={{ animationDelay: `${i * 40}ms` }}
-            >
-              <img src={v.img} alt="" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="absolute bottom-2 left-2 flex items-center gap-1 text-white text-xs font-medium">
-                <Icon name="Play" size={12} className="fill-white" /> {v.views}
-              </span>
-              <span className="absolute top-2 right-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded backdrop-blur">
-                {v.dur}
-              </span>
-            </div>
-          ))}
-        </section>
+        {/* Tab content */}
+        {tab === 'videos' && (
+          <section className="grid grid-cols-3 gap-1 p-1">
+            {VIDEOS.map((v, i) => (
+              <Link
+                to="/video"
+                key={i}
+                className="relative aspect-[3/4] overflow-hidden group animate-scale-in rounded-sm"
+                style={{ animationDelay: `${i * 40}ms` }}
+              >
+                <img src={v.img} alt="" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="absolute bottom-2 left-2 flex items-center gap-1 text-white text-xs font-medium">
+                  <Icon name="Play" size={12} className="fill-white" /> {v.views}
+                </span>
+                <span className="absolute top-2 right-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded backdrop-blur">
+                  {v.dur}
+                </span>
+              </Link>
+            ))}
+          </section>
+        )}
+
+        {tab === 'live' && (
+          <section className="px-5 py-6 grid grid-cols-2 gap-3">
+            {[
+              { title: 'Утренняя йога', viewers: '1.2K', img: IMG_2 },
+              { title: 'Горный закат', viewers: '3.4K', img: IMG_1 },
+            ].map((l, i) => (
+              <Link to="/live" key={i} className="relative rounded-2xl overflow-hidden aspect-video group">
+                <img src={l.img} alt={l.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <span className="absolute top-2 left-2 bg-destructive text-white text-[10px] font-bold px-2 py-0.5 rounded-full">ЗАПИСЬ</span>
+                <div className="absolute bottom-2 left-2 right-2 text-white">
+                  <p className="text-xs font-semibold">{l.title}</p>
+                  <p className="text-[10px] opacity-70">{l.viewers} зрителей</p>
+                </div>
+              </Link>
+            ))}
+          </section>
+        )}
+
+        {tab === 'saved' && (
+          <section className="grid grid-cols-3 gap-1 p-1">
+            {VIDEOS.slice(0, 3).map((v, i) => (
+              <Link
+                to="/video"
+                key={i}
+                className="relative aspect-[3/4] overflow-hidden group animate-scale-in rounded-sm"
+                style={{ animationDelay: `${i * 40}ms` }}
+              >
+                <img src={v.img} alt="" className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="absolute bottom-2 left-2 flex items-center gap-1 text-white text-xs font-medium">
+                  <Icon name="Bookmark" size={12} className="fill-white" /> {v.views}
+                </span>
+              </Link>
+            ))}
+          </section>
+        )}
       </div>
 
       {/* Mobile bottom nav */}
       <nav className="md:hidden fixed bottom-0 inset-x-0 bg-background/90 backdrop-blur border-t border-border flex items-center justify-around py-2.5 z-20">
         <Link to="/" className="p-2 text-muted-foreground"><Icon name="House" size={24} /></Link>
-        <button className="p-2 text-muted-foreground"><Icon name="CirclePlay" size={24} /></button>
-        <button className="p-2 text-muted-foreground"><Icon name="Radio" size={24} /></button>
-        <button className="p-2 text-muted-foreground"><Icon name="Search" size={24} /></button>
-        <button className="p-2 text-primary"><Icon name="User" size={24} /></button>
+        <Link to="/stories" className="p-2 text-muted-foreground"><Icon name="CirclePlay" size={24} /></Link>
+        <Link to="/live" className="p-2 text-muted-foreground"><Icon name="Radio" size={24} /></Link>
+        <Link to="/search" className="p-2 text-muted-foreground"><Icon name="Search" size={24} /></Link>
+        <Link to="/profile" className="p-2 text-primary"><Icon name="User" size={24} /></Link>
       </nav>
     </div>
   );
