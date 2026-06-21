@@ -65,7 +65,7 @@ const Index = () => {
             <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center">
               <Icon name="Aperture" className="text-primary-foreground" size={20} />
             </div>
-            <span className="font-display font-extrabold text-xl tracking-tight">Лумен</span>
+            <span className="font-display font-extrabold text-xl tracking-tight">Velour</span>
           </Link>
           {NAV.map((item) => (
             <Link
@@ -91,7 +91,7 @@ const Index = () => {
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                 <Icon name="Aperture" className="text-primary-foreground" size={18} />
               </div>
-              <span className="font-display font-extrabold text-lg">Лумен</span>
+              <span className="font-display font-extrabold text-lg">Velour</span>
             </Link>
             <Link to="/messages" className="p-2 hover:bg-secondary rounded-full transition-colors">
               <Icon name="Mail" size={22} className="text-muted-foreground" />
@@ -254,7 +254,7 @@ const Index = () => {
           </div>
 
           <p className="text-xs text-muted-foreground px-2 leading-relaxed">
-            Лумен · 2026 — социальная платформа для авторов видео-контента.
+            Velour · 2026 — место, где тепло становится контентом.
           </p>
         </aside>
       </div>
